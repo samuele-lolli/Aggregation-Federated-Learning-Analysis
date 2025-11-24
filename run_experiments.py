@@ -12,7 +12,7 @@ import os
 FEDERATION_PROFILE = "local-sim-gpu"  # or "local-sim" to use only CPU
 
 # Number of times each scenario is repeated
-NUM_REPETITIONS = 10 
+NUM_REPETITIONS = 15 
 
 # Base configuration common to all runs
 BASE_CONFIG: Dict[str, Any] = {

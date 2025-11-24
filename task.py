@@ -196,10 +196,8 @@ def load_data(
     # Return DataLoaders and the raw transform functions
     return trainloader, testloader, train_transforms_fn, eval_transforms_fn
 
-
 # Create a unique timestamped directory for storing run outputs
 def create_run_dir() -> Tuple[Path, str]:
-    
     run_dir_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     save_path = Path.cwd() / "outputs" / run_dir_str
     save_path.mkdir(parents=True, exist_ok=False)

@@ -1,8 +1,4 @@
 __pycache__/
 output*/
-wandb/
 .venv/
-plot*/
-old_plot*
 current_run_config.json
-tables*/

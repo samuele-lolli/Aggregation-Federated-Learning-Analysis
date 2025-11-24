@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import traceback 
+import argparse
 
 OUTPUTS_DIR = Path("./outputs")
 PLOTS_DIR = Path("./plots")
@@ -15,7 +16,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "FedAvg Performance: IID vs Non-IID (Full Participation)",
-        "filename": "fig_00_fedavg_iid_vs_noniid.png",
+        "filename": "fig_00_fedavg_iid_vs_noniid.pdf",
         "filters": {
             "strategy-name": "FedAvg", # Usa il nome pulito
             "fraction-train": 1.0, "attack_name": ["none", None, ""],
@@ -31,7 +32,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "IID (Full Participation) - Baseline Strategies",
-        "filename": "fig_01_iid_baseline.png",
+        "filename": "fig_01_iid_baseline.pdf",
         "filters": {
             "partitioner-name": "iid", "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -42,7 +43,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "IID (Full Participation) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_02_iid_adaptive.png",
+        "filename": "fig_02_iid_adaptive.pdf",
         "filters": {
             "partitioner-name": "iid", "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -57,7 +58,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.5, Full Participation) - Baseline Strategies",
-        "filename": "fig_03_noniid_a05_baseline.png",
+        "filename": "fig_03_noniid_a05_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -68,7 +69,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, Full Participation) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_04_noniid_a05_adaptive.png",
+        "filename": "fig_04_noniid_a05_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -83,7 +84,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.1, Full Participation) - Baseline Strategies",
-        "filename": "fig_05_noniid_a01_baseline.png",
+        "filename": "fig_05_noniid_a01_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -94,7 +95,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.1, Full Participation) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_06_noniid_a01_adaptive.png",
+        "filename": "fig_06_noniid_a01_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -109,7 +110,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.03, Full Participation) - Baseline Strategies",
-        "filename": "fig_09_noniid_a003_baseline.png",
+        "filename": "fig_09_noniid_a003_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -119,8 +120,8 @@ PLOTS_DEFINITIONS = [
         "plot_type": "standard"
     },
     {
-        "title": "Non-IID (α=0.1, Full Participation) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_10_noniid_a003_adaptive.png",
+        "title": "Non-IID (α=0.03, Full Participation) - Adaptive Optimizers vs FedAvg",
+        "filename": "fig_10_noniid_a003_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 1.0,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -135,7 +136,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.1, Full Participation) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_11_noniid_a01_all_vs_personalized.png",
+        "filename": "fig_11_noniid_a01_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 1.0,
             "attack_name": ["none", None, ""],
@@ -150,7 +151,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, Full Participation) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_12_noniid_a05_all_vs_personalized.png",
+        "filename": "fig_12_noniid_a05_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 1.0,
             "attack_name": ["none", None, ""],
@@ -165,7 +166,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, Full Participation) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_14_noniid_a003_all_vs_personalized.png",
+        "filename": "fig_14_noniid_a003_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 1.0,
             "attack_name": ["none", None, ""],
@@ -184,7 +185,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.1, fraction=0.8) - Baseline Strategies",
-        "filename": "fig_15_noniid_a01_frac08_baseline.png",
+        "filename": "fig_15_noniid_a01_frac08_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -200,7 +201,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.1, fraction=0.8) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_16_noniid_a01_frac08_adaptive.png",
+        "filename": "fig_16_noniid_a01_frac08_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -216,7 +217,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.1, fraction=0.8) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_17_noniid_a01_frac08_all_vs_personalized.png",
+        "filename": "fig_17_noniid_a01_frac08_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.8,
             "attack_name": ["none", None, ""],
@@ -235,7 +236,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.8) - Baseline Strategies",
-        "filename": "fig_18_noniid_a05_frac08_baseline.png",
+        "filename": "fig_18_noniid_a05_frac08_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -251,7 +252,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.8) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_19_noniid_a05_frac08_adaptive.png",
+        "filename": "fig_19_noniid_a05_frac08_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -267,7 +268,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.8) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_20_noniid_a05_frac08_all_vs_personalized.png",
+        "filename": "fig_20_noniid_a05_frac08_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.8,
             "attack_name": ["none", None, ""],
@@ -286,7 +287,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.8) - Baseline Strategies",
-        "filename": "fig_23_noniid_a003_frac08_baseline.png",
+        "filename": "fig_23_noniid_a003_frac08_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -298,7 +299,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.8) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_24_noniid_a003_frac08_adaptive.png",
+        "filename": "fig_24_noniid_a003_frac08_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.8,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -310,7 +311,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.8) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_30_noniid_a003_frac08_all_vs_personalized.png",
+        "filename": "fig_30_noniid_a003_frac08_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.8,
             "attack_name": ["none", None, ""],
@@ -333,7 +334,7 @@ PLOTS_DEFINITIONS = [
     # ==============================================================================
     {
         "title": "Non-IID (α=0.1, fraction=0.7) - Baseline Strategies",
-        "filename": "fig_25_noniid_a01_frac07_baseline.png",
+        "filename": "fig_25_noniid_a01_frac07_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -349,7 +350,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.1, fraction=0.7) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_26_noniid_a01_frac07_adaptive.png",
+        "filename": "fig_26_noniid_a01_frac07_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -365,7 +366,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.1, fraction=0.7) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_27_noniid_a01_frac07_all_vs_personalized.png",
+        "filename": "fig_27_noniid_a01_frac07_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.7,
             "attack_name": ["none", None, ""],
@@ -384,7 +385,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.7) - Baseline Strategies",
-        "filename": "fig_28_noniid_a05_frac07_baseline.png",
+        "filename": "fig_28_noniid_a05_frac07_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -400,7 +401,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.7) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_29_noniid_a05_frac07_adaptive.png",
+        "filename": "fig_29_noniid_a05_frac07_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -416,7 +417,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.5, fraction=0.7) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_30_noniid_a05_frac07_all_vs_personalized.png",
+        "filename": "fig_30_noniid_a05_frac07_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.7,
             "attack_name": ["none", None, ""],
@@ -435,7 +436,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.7) - Baseline Strategies",
-        "filename": "fig_33_noniid_a003_frac07_baseline.png",
+        "filename": "fig_33_noniid_a003_frac07_baseline.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -447,7 +448,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.7) - Adaptive Optimizers vs FedAvg",
-        "filename": "fig_34_noniid_a003_frac07_adaptive.png",
+        "filename": "fig_34_noniid_a003_frac07_adaptive.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.7,
             "attack_name": ["none", None, ""], "personalization": [False, None],
@@ -459,7 +460,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Non-IID (α=0.03, fraction=0.7) - All Strategies vs Personalized FedAvg",
-        "filename": "fig_30_noniid_a003_frac07_all_vs_personalized.png",
+        "filename": "fig_30_noniid_a003_frac07_all_vs_personalized.pdf",
         "filters": {
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.7,
             "attack_name": ["none", None, ""],
@@ -482,7 +483,7 @@ PLOTS_DEFINITIONS = [
     # --- Backdoor (Full Participation) ---
     {
         "title": "Robust Strategies under Backdoor Attack (IID, Full Participation) vs Baseline",
-        "filename": "fig_35_attack_backdoor_iid_full.png",
+        "filename": "fig_35_attack_backdoor_iid_full.pdf",
         "filters": {
             "attack_name": "backdoor", 
             "partitioner-name": "iid", 
@@ -494,7 +495,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Robust Strategies under Backdoor Attack (non-IID, α=0.5, Full Participation) vs Baseline",
-        "filename": "fig_36_attack_backdoor_noniid_a05_full.png",
+        "filename": "fig_36_attack_backdoor_noniid_a05_full.pdf",
         "filters": {
             "attack_name": "backdoor", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5,
@@ -506,7 +507,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Robust Strategies under Backdoor Attack (non-IID, α=0.1, Full Participation) vs Baseline",
-        "filename": "fig_37_attack_backdoor_noniid_a01_full.png",
+        "filename": "fig_37_attack_backdoor_noniid_a01_full.pdf",
         "filters": {
             "attack_name": "backdoor", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1,
@@ -519,7 +520,7 @@ PLOTS_DEFINITIONS = [
     # --- Byzantine (Full Participation) ---
     {
         "title": "Robust Strategies under Byzantine Attack (IID, Full Participation) vs Baseline",
-        "filename": "fig_38_attack_byzantine_iid_full.png",
+        "filename": "fig_38_attack_byzantine_iid_full.pdf",
         "filters": {
             "attack_name": "byzantine", 
             "partitioner-name": "iid",
@@ -531,7 +532,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Robust Strategies under Byzantine Attack (non-IID, α=0.5, Full Participation) vs Baseline",
-        "filename": "fig_39_attack_byzantine_noniid_a05_full.png",
+        "filename": "fig_39_attack_byzantine_noniid_a05_full.pdf",
         "filters": {
             "attack_name": "byzantine", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5,
@@ -543,7 +544,7 @@ PLOTS_DEFINITIONS = [
     },
      {
         "title": "Robust Strategies under Byzantine Attack (non-IID, α=0.1, Full Participation) vs Baseline",
-        "filename": "fig_40_attack_byzantine_noniid_a01_full.png",
+        "filename": "fig_40_attack_byzantine_noniid_a01_full.pdf",
         "filters": {
             "attack_name": "byzantine", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1,
@@ -556,7 +557,7 @@ PLOTS_DEFINITIONS = [
     # --- Label Flipping (Full Participation) ---
     {
         "title": "Robust Strategies under Label Flipping Attack (IID, Full Participation) vs Baseline",
-        "filename": "fig_41_attack_labelflip_iid_full.png",
+        "filename": "fig_41_attack_labelflip_iid_full.pdf",
         "filters": {
             "attack_name": "label_flipping", 
             "partitioner-name": "iid",
@@ -568,7 +569,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Robust Strategies under Label Flipping Attack (non-IID, α=0.5, Full Participation) vs Baseline",
-        "filename": "fig_42_attack_labelflip_noniid_a05_full.png",
+        "filename": "fig_42_attack_labelflip_noniid_a05_full.pdf",
         "filters": {
             "attack_name": "label_flipping", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5,
@@ -580,7 +581,7 @@ PLOTS_DEFINITIONS = [
     },
     {
         "title": "Robust Strategies under Label Flipping Attack (non-IID, α=0.1, Full Participation) vs Baseline",
-        "filename": "fig_43_attack_labelflip_noniid_a01_full.png",
+        "filename": "fig_43_attack_labelflip_noniid_a01_full.pdf",
         "filters": {
             "attack_name": "label_flipping", 
             "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1,
@@ -729,7 +730,7 @@ def plot_metric(ax, group, metric_col, plot_args, is_personalized=False):
         return False
 
 # function to generate standard plots (2x2 or 1x2 for personalization)
-def generate_standard_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.DataFrame = None, is_attack_plot: bool = False):
+def generate_standard_plot(df: pd.DataFrame, plot_def: dict, output_dir: Path, baseline_df: pd.DataFrame = None, is_attack_plot: bool = False, force_client_only: bool = False):
     title = plot_def["title"]
     filename = plot_def["filename"]
     comparison_key = plot_def["comparison_key"]
@@ -742,24 +743,33 @@ def generate_standard_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
     is_personalization_involved = any('personalized' in str(name).lower() for name in scenarios_in_plot) or \
                                   ('personalization' in df.columns and df['personalization'].any())
 
+    TITLE_FS = 20
+    LABEL_FS = 16
+    TICK_FS = 12
+    LEGEND_FS = 16
+    SUPTITLE_FS = 24
 
-    if is_personalization_involved:
-        # --- Layout 1x2 for Personalization ---
-        print(f"   Generating 1x2 layout (client-side only) for: {title}")
-        fig, axes = plt.subplots(1, 2, figsize=(20, 8), sharey=True)
-        fig.suptitle(title, fontsize=24, y=1.02)
-        try: ax_client_acc, ax_client_f1 = axes
-        except ValueError: ax_client_acc = axes; ax_client_f1 = fig.add_subplot(122); print(f"   Warning: Unexpected axes shape for 1x2.")
+   
+    if is_personalization_involved or force_client_only:
+        print(f"   Generating 2x1 layout (client-side only) for: {title}")
+        fig, axes = plt.subplots(2, 1, figsize=(12, 16), sharey=True, sharex=True) 
+        fig.suptitle(title, fontsize=SUPTITLE_FS, y=0.98)
+        try: 
+            ax_client_acc, ax_client_f1 = axes
+        except ValueError: 
+            ax_client_acc = axes; ax_client_f1 = fig.add_subplot(212); print(f"   Warning: Unexpected axes shape for 2x1.")
+        
         ax_server_acc, ax_server_f1 = None, None
         axes_list = [ax_client_acc, ax_client_f1]
-        ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=16)
-        ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=16)
-        ax_client_acc.set_ylabel("Metric Value", fontsize=14)
+        
+        ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=TITLE_FS)
+        ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=TITLE_FS)
+        ax_client_acc.set_ylabel("Metric Value", fontsize=LABEL_FS)
+        ax_client_f1.set_ylabel("Metric Value", fontsize=LABEL_FS)
     else:
-        # --- Layout Standard 2x2 ---
         print(f"   Generating 2x2 layout for standard plot: {title}")
-        fig, axes = plt.subplots(2, 2, figsize=(20, 16), sharex=False, sharey=True)
-        fig.suptitle(title, fontsize=24, y=0.98)
+        fig, axes = plt.subplots(2, 2, figsize=(18, 14), sharex=True, sharey=True) 
+        fig.suptitle(title, fontsize=SUPTITLE_FS, y=0.98)
         try:
              ax_server_acc, ax_server_f1 = axes[0, 0], axes[0, 1]
              ax_client_acc, ax_client_f1 = axes[1, 0], axes[1, 1]
@@ -767,28 +777,35 @@ def generate_standard_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
         except (IndexError, TypeError):
              print(f"   Warning: Unexpected axes shape for 2x2 layout.")
              axes_list = np.array(axes).flatten(); ax_server_acc, ax_server_f1, ax_client_acc, ax_client_f1 = (axes_list[i] if i < len(axes_list) else None for i in range(4))
-        if ax_server_acc: ax_server_acc.set_title("Server-Side Accuracy", fontsize=16)
-        if ax_server_f1: ax_server_f1.set_title("Server-Side F1-Score", fontsize=16)
-        if ax_client_acc: ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=16)
-        if ax_client_f1: ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=16)
-        if ax_server_acc: ax_server_acc.set_ylabel("Accuracy", fontsize=14)
-        if ax_client_acc: ax_client_acc.set_ylabel("Accuracy", fontsize=14)
-        if ax_server_f1: ax_server_f1.set_ylabel("Macro F1-Score", fontsize=14)
-        if ax_client_f1: ax_client_f1.set_ylabel("Macro F1-Score", fontsize=14)
+        
+        if ax_server_acc: ax_server_acc.set_title("Server-Side Accuracy", fontsize=TITLE_FS)
+        if ax_server_f1: ax_server_f1.set_title("Server-Side F1-Score", fontsize=TITLE_FS)
+        if ax_client_acc: ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=TITLE_FS)
+        if ax_client_f1: ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=TITLE_FS)
+        
+        if ax_server_acc: ax_server_acc.set_ylabel("Metric Value", fontsize=LABEL_FS)
+        if ax_client_acc: ax_client_acc.set_ylabel("Metric Value", fontsize=LABEL_FS)
 
     max_round_data = max(df["round"].max() if not df.empty else 0, baseline_df["round"].max() if baseline_df is not None and not baseline_df.empty else 0)
     max_round = int(max_round_data) if pd.notna(max_round_data) else 40
     xticks = np.arange(0, max_round + 1, 2)
+    
     for ax in axes_list:
         if ax is None: continue
         ax.grid(True, linestyle='--', alpha=0.6)
         ax.set_ylim(-0.01, 1.01); ax.set_xlim(-0.5, max_round + 0.5)
-        ax.set_xlabel("Federated Learning Round", fontsize=14)
-        ax.tick_params(axis='x', which='major', labelsize=12, rotation=0)
+        ax.tick_params(axis='both', which='major', labelsize=TICK_FS) 
         ax.set_xticks(xticks)
 
-        if not is_personalization_involved and ax in [ax_server_acc, ax_server_f1]:
-             if ax: ax.set_xlabel("")
+    xlabel_text = "Federated Learning Round"
+    if is_personalization_involved or force_client_only:
+        if ax_client_f1: ax_client_f1.set_xlabel(xlabel_text, fontsize=LABEL_FS)
+        if ax_client_acc: ax_client_acc.set_xlabel("") 
+    else:
+        if ax_server_acc: ax_server_acc.set_xlabel("")
+        if ax_server_f1: ax_server_f1.set_xlabel("")
+        if ax_client_acc: ax_client_acc.set_xlabel(xlabel_text, fontsize=LABEL_FS)
+        if ax_client_f1: ax_client_f1.set_xlabel(xlabel_text, fontsize=LABEL_FS)
 
     handles = []; labels = []
     colors = plt.get_cmap('tab10').colors
@@ -799,13 +816,14 @@ def generate_standard_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
         baseline_args = {'label': baseline_name, 'color': 'black', 'linestyle': '--', 'linewidth': 2.0}
         
         # Plot baseline metrics
-        bl_plotted_server_acc = plot_metric(ax_server_acc, baseline_df, "server_evaluation_accuracy", baseline_args, is_personalized=False) if ax_server_acc and not is_personalization_involved else False
-        bl_plotted_server_f1 = plot_metric(ax_server_f1, baseline_df, "server_evaluation_f1_score", baseline_args, is_personalized=False) if ax_server_f1 and not is_personalization_involved else False
+        bl_plotted_server_acc = plot_metric(ax_server_acc, baseline_df, "server_evaluation_accuracy", baseline_args, is_personalized=False) if ax_server_acc and not (is_personalization_involved or force_client_only) else False
+        bl_plotted_server_f1 = plot_metric(ax_server_f1, baseline_df, "server_evaluation_f1_score", baseline_args, is_personalized=False) if ax_server_f1 and not (is_personalization_involved or force_client_only) else False
         bl_plotted_client_acc = plot_metric(ax_client_acc, baseline_df, "client_evaluation_accuracy", baseline_args, is_personalized=False) if ax_client_acc else False
         bl_plotted_client_f1 = plot_metric(ax_client_f1, baseline_df, "client_evaluation_f1_score", baseline_args, is_personalized=False) if ax_client_f1 else False
+        
         # Add baseline handle/label
         if bl_plotted_server_acc or bl_plotted_server_f1 or bl_plotted_client_acc or bl_plotted_client_f1:
-            current_ax = ax_client_acc if is_personalization_involved else (ax_server_acc if ax_server_acc else ax_client_acc) # Get a valid axis
+            current_ax = ax_client_acc if (is_personalization_involved or force_client_only) else (ax_server_acc if ax_server_acc else ax_client_acc) # Get a valid axis
             if current_ax:
                 line = next((l for l in current_ax.lines if l.get_label() == baseline_name), None)
                 if line and baseline_name not in labels:
@@ -840,37 +858,41 @@ def generate_standard_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
             plot_args = {'label': plot_label, 'color': color, 'linestyle': linestyle, 'linewidth': 2.5}
 
         # Plot metrics
-        plotted_server_acc = plot_metric(ax_server_acc, group, "server_evaluation_accuracy", plot_args, is_current_line_personalized) if ax_server_acc and not is_personalization_involved else False
-        plotted_server_f1 = plot_metric(ax_server_f1, group, "server_evaluation_f1_score", plot_args, is_current_line_personalized) if ax_server_f1 and not is_personalization_involved else False
+        plotted_server_acc = plot_metric(ax_server_acc, group, "server_evaluation_accuracy", plot_args, is_current_line_personalized) if ax_server_acc and not (is_personalization_involved or force_client_only) else False
+        plotted_server_f1 = plot_metric(ax_server_f1, group, "server_evaluation_f1_score", plot_args, is_current_line_personalized) if ax_server_f1 and not (is_personalization_involved or force_client_only) else False
         plotted_client_acc = plot_metric(ax_client_acc, group, "client_evaluation_accuracy", plot_args, is_current_line_personalized) if ax_client_acc else False
         plotted_client_f1 = plot_metric(ax_client_f1, group, "client_evaluation_f1_score", plot_args, is_current_line_personalized) if ax_client_f1 else False
 
         # Add handle/label
         if plotted_server_acc or plotted_server_f1 or plotted_client_acc or plotted_client_f1:
-             current_ax = ax_client_acc if ax_client_acc else ax_server_acc
+             current_ax = ax_client_acc if (is_personalization_involved or force_client_only) else (ax_server_acc if ax_server_acc else ax_client_acc)
              if current_ax:
                   line = next((l for l in current_ax.lines if l.get_label() == plot_label), None)
                   if line and plot_label not in labels:
                        handles.append(line); labels.append(plot_label)
 
     if handles:
-        num_cols = min(5, len(handles))
-        if is_personalization_involved: fig.subplots_adjust(bottom=0.30)
-        else: fig.subplots_adjust(bottom=0.18)
-        fig.legend(handles, labels, title="Legend", loc='lower center', bbox_to_anchor=(0.5, 0.05), ncol=num_cols, fontsize=16, title_fontsize=18)
+        num_cols = 3 
+        
+        if is_personalization_involved or force_client_only: 
+            fig.subplots_adjust(bottom=0.20, hspace=0.15) 
+        else: 
+            fig.subplots_adjust(bottom=0.15, hspace=0.2)
+            
+        fig.legend(handles, labels, title="Legend", loc='lower center', bbox_to_anchor=(0.5, 0.05), ncol=num_cols, fontsize=LEGEND_FS, title_fontsize=LEGEND_FS+2) 
     else:
         print(f"   ⚠️ No data plotted for '{title}'. Legend skipped.")
 
-    PLOTS_DIR.mkdir(exist_ok=True)
-    plot_path = PLOTS_DIR / filename
+    output_dir.mkdir(exist_ok=True) 
+    plot_path = output_dir / filename 
     try:
-        fig.savefig(plot_path, bbox_inches='tight', dpi=300)
-        print(f"   ✅ Generated plot: {plot_path.name}")
+        fig.savefig(plot_path, bbox_inches='tight') 
+        print(f"   ✅ Generated plot: {plot_path.name} in {output_dir.name}")
     except Exception as e_save:
         print(f"   🔥 Error saving plot '{filename}': {e_save}")
     plt.close(fig)
 
-def generate_backdoor_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.DataFrame = None, is_attack_plot: bool = False):
+def generate_backdoor_plot(df: pd.DataFrame, plot_def: dict, output_dir: Path, baseline_df: pd.DataFrame = None, is_attack_plot: bool = False):
     title = plot_def["title"]
     filename = plot_def["filename"]
     comparison_key = plot_def["comparison_key"]
@@ -879,25 +901,44 @@ def generate_backdoor_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
         print(f"Skipping plot '{title}' - no data found after filtering.")
         return
 
-    fig, axes = plt.subplots(1, 3, figsize=(30, 8), sharey=True)
-    fig.suptitle(title, fontsize=24, y=1.02)
-    ax_client_acc, ax_client_f1, ax_client_asr = axes
+    TITLE_FS = 20
+    LABEL_FS = 16
+    TICK_FS = 12
+    LEGEND_FS = 16
+    SUPTITLE_FS = 24
+
+    fig, axes = plt.subplots(3, 1, figsize=(12, 20), sharey=True, sharex=True) 
+    fig.suptitle(title, fontsize=SUPTITLE_FS, y=0.98) 
+    
+    try:
+        ax_client_acc, ax_client_f1, ax_client_asr = axes
+    except ValueError:
+        print("   Warning: Unexpected axes shape for 3x1.")
+        ax_client_acc, ax_client_f1, ax_client_asr = axes[0], axes[1], axes[2]
+        
     axes_list = axes
 
-    ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=16)
-    ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=16)
-    ax_client_asr.set_title("Client-Side Attack Success Rate (ASR)", fontsize=16)
-    ax_client_acc.set_ylabel("Metric Value", fontsize=14)
+    ax_client_acc.set_title("Client-Side Aggregated Accuracy", fontsize=TITLE_FS)
+    ax_client_f1.set_title("Client-Side Aggregated F1-Score", fontsize=TITLE_FS)
+    ax_client_asr.set_title("Client-Side Attack Success Rate (ASR)", fontsize=TITLE_FS)
+    ax_client_acc.set_ylabel("Metric Value", fontsize=LABEL_FS)
+    ax_client_f1.set_ylabel("Metric Value", fontsize=LABEL_FS)
+    ax_client_asr.set_ylabel("Metric Value", fontsize=LABEL_FS)
 
     max_round_data = max(df["round"].max() if not df.empty else 0, baseline_df["round"].max() if baseline_df is not None and not baseline_df.empty else 0)
     max_round = int(max_round_data) if pd.notna(max_round_data) else 40
     xticks = np.arange(0, max_round + 1, 2)
+    
+    xlabel_text = "Federated Learning Round"
+    
     for ax in axes_list:
         ax.grid(True, linestyle='--', alpha=0.6)
         ax.set_ylim(-0.01, 1.01); ax.set_xlim(-0.5, max_round + 0.5)
-        ax.set_xlabel("Federated Learning Round", fontsize=14)
-        ax.tick_params(axis='x', which='major', labelsize=12, rotation=0)
+        ax.tick_params(axis='both', which='major', labelsize=TICK_FS) 
         ax.set_xticks(xticks)
+        ax.set_xlabel("") 
+    
+    ax_client_asr.set_xlabel(xlabel_text, fontsize=LABEL_FS)
 
     handles = []; labels = []
     colors = plt.get_cmap('tab10').colors
@@ -944,26 +985,30 @@ def generate_backdoor_plot(df: pd.DataFrame, plot_def: dict, baseline_df: pd.Dat
                        handles.append(line); labels.append(plot_label)
 
     if handles:
-        num_cols = min(5, len(handles))
-        fig.subplots_adjust(bottom=0.30)
-        fig.legend(handles, labels, title="Legend", loc='lower center', bbox_to_anchor=(0.5, 0.05), ncol=num_cols, fontsize=16, title_fontsize=18)
+        num_cols = 3 
+        fig.subplots_adjust(bottom=0.15, hspace=0.2)
+        fig.legend(handles, labels, title="Legend", loc='lower center', bbox_to_anchor=(0.5, 0.05), ncol=num_cols, fontsize=LEGEND_FS, title_fontsize=LEGEND_FS+2) 
     else:
         print(f"   ⚠️ No data plotted for '{title}'. Legend skipped.")
 
-    PLOTS_DIR.mkdir(exist_ok=True)
-    plot_path = PLOTS_DIR / filename
+    output_dir.mkdir(exist_ok=True)
+    plot_path = output_dir / filename 
     try:
-        fig.savefig(plot_path, bbox_inches='tight', dpi=300)
-        print(f"   ✅ Generated plot: {plot_path.name}")
+        fig.savefig(plot_path, bbox_inches='tight')
+        print(f"   ✅ Generated plot: {plot_path.name} in {output_dir.name}")
     except Exception as e_save:
          print(f"   🔥 Error saving plot '{filename}': {e_save}")
     plt.close(fig)
 
-# MAIN EXECUTION
 if __name__ == "__main__":
     print("📊 Starting analysis...")
-    PLOTS_DIR.mkdir(exist_ok=True)
-
+    PLOTS_DIR_STANDARD = PLOTS_DIR / "standard"
+    PLOTS_DIR_CLIENT = PLOTS_DIR / "client_only"
+    PLOTS_DIR_STANDARD.mkdir(parents=True, exist_ok=True)
+    PLOTS_DIR_CLIENT.mkdir(parents=True, exist_ok=True)
+    print(f"Standard plots (2x2) will be saved to: {PLOTS_DIR_STANDARD}")
+    print(f"Client-only plots (2x1) will be saved to: {PLOTS_DIR_CLIENT}")
+        
     print("⏳ Loading results data...")
     master_df = load_all_results(OUTPUTS_DIR)
 
@@ -1028,12 +1073,10 @@ if __name__ == "__main__":
                             numeric_col = pd.to_numeric(filtered_df[key], errors='coerce')
                             if isinstance(filter_val, float): filtered_df = filtered_df[np.isclose(numeric_col, filter_val, equal_nan=True)]
                             else: filtered_df = filtered_df[numeric_col == filter_val]
-                        else: # String
+                        else:
                             filtered_df = filtered_df[filtered_df[key].astype(str) == str(filter_val)]
                 
                 print(f"   📊 Found {filtered_df['run_id'].nunique()} runs ({len(filtered_df)} rows) matching main filters for '{title}'.")
-
-                # Find Baseline Data only if requested
                 include_baseline_flag = plot_def.get("include_baseline", False)
                 include_full_participation_baseline_flag = plot_def.get("include_full_participation_baseline", False)
 
@@ -1122,12 +1165,19 @@ if __name__ == "__main__":
                     plot_type = plot_def.get("plot_type", "standard")
                     
                     effective_baseline_df = baseline_fedavg_df if (include_baseline_flag or include_full_participation_baseline_flag) and baseline_fedavg_df is not None and not baseline_fedavg_df.empty else None
-                    is_attack_plot_flag = include_baseline_flag # Solo i plot di attacco (include_baseline) devono rinominare FedAvg
+                    is_attack_plot_flag = include_baseline_flag
 
                     if plot_type == "backdoor":
-                        generate_backdoor_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag)
+                    
+                        print(" -> Generating plot for 'standard' folder...")
+                        generate_backdoor_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag, output_dir=PLOTS_DIR_STANDARD)
+                        print(" -> Generating plot for 'client_only' folder...")
+                        generate_backdoor_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag, output_dir=PLOTS_DIR_CLIENT)
                     else:
-                        generate_standard_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag)
+                        print(" -> Generating plot for 'standard' folder...")
+                        generate_standard_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag, force_client_only=False, output_dir=PLOTS_DIR_STANDARD)
+                        print(" -> Generating plot for 'client_only' folder...")
+                        generate_standard_plot(df=filtered_df, plot_def=plot_def, baseline_df=effective_baseline_df, is_attack_plot=is_attack_plot_flag, force_client_only=True, output_dir=PLOTS_DIR_CLIENT)
                 else:
                     print(f"   ❌ No data remaining after filtering (and no baseline requested/found) for '{title}'. Skipping plot generation.")
 
@@ -1135,7 +1185,7 @@ if __name__ == "__main__":
                 print(f"   🔥 Error processing plot definition '{title}': {e}")
                 traceback.print_exc()
 
-        print("\n✅ Analysis complete. Plots saved in 'plots' directory.")
+        print("\n✅ Analysis complete. Plots saved in 'plots/standard' and 'plots/client_only' directories.")
     else:
         print("\n❌ Could not find or load any valid 'results.json' files in the 'outputs' directory.")
         print("   Please run experiments using 'run_experiments.py' first.")

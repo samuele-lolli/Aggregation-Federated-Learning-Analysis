@@ -43,28 +43,42 @@ TABLE_DEFINITIONS = [
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
+    {
+        "title": f"Table 4: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.03, Full Participation)",
+        "filename": "table_04_noniid_a003_full_r40.md",
+        "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 1.0, "personalization": False, "attack_name": "none"},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
 
     # ====================================================================
     # --- Partial Client Participation (fraction=0.8, No Attack) ---
     # ====================================================================
     {
-        "title": f"Table 4: Performance at Round {TARGET_ROUND} in IID Scenarios (Partial Participation, fraction=0.8)",
-        "filename": "table_04_iid_frac08_r40.md",
+        "title": f"Table 5: Performance at Round {TARGET_ROUND} in IID Scenarios (Partial Participation, fraction=0.8)",
+        "filename": "table_05_iid_frac08_r40.md",
         "filters": {"partitioner-name": "iid", "fraction-train": 0.8, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 5: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.5, Partial Participation, fraction=0.8)",
-        "filename": "table_05_noniid_a05_frac08_r40.md",
+        "title": f"Table 6: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.5, Partial Participation, fraction=0.8)",
+        "filename": "table_06_noniid_a05_frac08_r40.md",
         "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.8, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 6: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.1, Partial Participation, fraction=0.8)",
-        "filename": "table_06_noniid_a01_frac08_r40.md",
+        "title": f"Table 7: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.1, Partial Participation, fraction=0.8)",
+        "filename": "table_07_noniid_a01_frac08_r40.md",
         "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.8, "personalization": False, "attack_name": "none"},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 8: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.03, Partial Participation, fraction=0.8)",
+        "filename": "table_08_noniid_a003_frac08_r40.md",
+        "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.8, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
@@ -73,23 +87,30 @@ TABLE_DEFINITIONS = [
     # --- Partial Client Participation (fraction=0.7, No Attack) ---
     # ====================================================================
     {
-        "title": f"Table 7: Performance at Round {TARGET_ROUND} in IID Scenarios (Partial Participation, fraction=0.7)",
-        "filename": "table_07_iid_frac07_r40.md",
+        "title": f"Table 9: Performance at Round {TARGET_ROUND} in IID Scenarios (Partial Participation, fraction=0.7)",
+        "filename": "table_09_iid_frac07_r40.md",
         "filters": {"partitioner-name": "iid", "fraction-train": 0.7, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
      {
-        "title": f"Table 8: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.5, Partial Participation, fraction=0.7)",
-        "filename": "table_08_noniid_a05_frac07_r40.md",
+        "title": f"Table 10: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.5, Partial Participation, fraction=0.7)",
+        "filename": "table_10_noniid_a05_frac07_r40.md",
         "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "fraction-train": 0.7, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 9: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.1, Partial Participation, fraction=0.7)",
-        "filename": "table_09_noniid_a01_frac07_r40.md",
+        "title": f"Table 11: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.1, Partial Participation, fraction=0.7)",
+        "filename": "table_11_noniid_a01_frac07_r40.md",
         "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "fraction-train": 0.7, "personalization": False, "attack_name": "none"},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 12: Performance at Round {TARGET_ROUND} in Non-IID Scenarios (α=0.03, Partial Participation, fraction=0.7)",
+        "filename": "table_12_noniid_a003_frac07_r40.md",
+        "filters": {"partitioner-name": "dirichlet", "dirichlet-alpha": 0.03, "fraction-train": 0.7, "personalization": False, "attack_name": "none"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
@@ -98,34 +119,59 @@ TABLE_DEFINITIONS = [
     # --- Federated Personalization (FedPer, No Attack) ---
     # ==========================================================
     {
-        "title": f"Table 10: Performance of Federated Personalization (FedPer) at Round {TARGET_ROUND}",
-        "filename": "table_10_personalization_r40.md",
+        "title": f"Table 13: Performance of Federated Personalization (FedPer) at Round {TARGET_ROUND}",
+        "filename": "table_13_personalization_r40.md",
         "filters": {"personalization": True, "attack_name": "none"},
         "index_col": "scenario_name",
         "metrics": PERSONALIZATION_METRICS,
     },
 
     # ==========================================================
-    # --- Backdoor Attack Scenarios ---
+    # --- Backdoor Attack Scenarios (1 Malicious Client) ---
     # ==========================================================
     {
-        "title": f"Table 11: Performance under Backdoor Attack at Round {TARGET_ROUND} (IID)",
-        "filename": "table_11_attack_backdoor_iid_r40.md",
-        "filters": {"attack_name": "backdoor", "partitioner-name": "iid"},
+        "title": f"Table 14: Performance under Backdoor Attack at Round {TARGET_ROUND} (IID, 1 Malicious Client)",
+        "filename": "table_14_attack_backdoor_iid_1_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "iid", "num_malicious_clients": 1},
         "index_col": "strategy-name",
         "metrics": BACKDOOR_ATTACK_METRICS,
     },
     {
-        "title": f"Table 12: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.5)",
-        "filename": "table_12_attack_backdoor_noniid_a05_r40.md",
-        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5},
+        "title": f"Table 15: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.5, 1 Malicious Client)",
+        "filename": "table_15_attack_backdoor_noniid_a05_1_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "num_malicious_clients": 1},
         "index_col": "strategy-name",
         "metrics": BACKDOOR_ATTACK_METRICS,
     },
     {
-        "title": f"Table 13: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.1)",
-        "filename": "table_13_attack_backdoor_noniid_a01_r40.md",
-        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1},
+        "title": f"Table 16: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.1, 1 Malicious Client)",
+        "filename": "table_16_attack_backdoor_noniid_a01_1_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "num_malicious_clients": 1},
+        "index_col": "strategy-name",
+        "metrics": BACKDOOR_ATTACK_METRICS,
+    },
+
+    # ==========================================================
+    # --- Backdoor Attack Scenarios (2 Malicious Clients) ---
+    # ==========================================================
+    {
+        "title": f"Table 17: Performance under Backdoor Attack at Round {TARGET_ROUND} (IID, 2 Malicious Clients)",
+        "filename": "table_17_attack_backdoor_iid_2_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "iid", "num_malicious_clients": 2},
+        "index_col": "strategy-name",
+        "metrics": BACKDOOR_ATTACK_METRICS,
+    },
+    {
+        "title": f"Table 18: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.5, 2 Malicious Clients)",
+        "filename": "table_18_attack_backdoor_noniid_a05_2_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "num_malicious_clients": 2},
+        "index_col": "strategy-name",
+        "metrics": BACKDOOR_ATTACK_METRICS,
+    },
+    {
+        "title": f"Table 19: Performance under Backdoor Attack at Round {TARGET_ROUND} (Non-IID α=0.1, 2 Malicious Clients)",
+        "filename": "table_19_attack_backdoor_noniid_a01_2_malicious_r40.md",
+        "filters": {"attack_name": "backdoor", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "num_malicious_clients": 2},
         "index_col": "strategy-name",
         "metrics": BACKDOOR_ATTACK_METRICS,
     },
@@ -134,48 +180,98 @@ TABLE_DEFINITIONS = [
     # --- Byzantine Attack Scenarios ---
     # ==========================================================
     {
-        "title": f"Table 14: Performance under Byzantine Attack at Round {TARGET_ROUND} (IID)",
-        "filename": "table_14_attack_byzantine_iid_r40.md",
+        "title": f"Table 20: Performance under Byzantine Attack at Round {TARGET_ROUND} (IID)",
+        "filename": "table_20_attack_byzantine_iid_r40.md",
         "filters": {"attack_name": "byzantine", "partitioner-name": "iid"},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 15: Performance under Byzantine Attack at Round {TARGET_ROUND} (Non-IID α=0.5)",
-        "filename": "table_15_attack_byzantine_noniid_a05_r40.md",
+        "title": f"Table 21: Performance under Byzantine Attack at Round {TARGET_ROUND} (Non-IID α=0.5)",
+        "filename": "table_21_attack_byzantine_noniid_a05_r40.md",
         "filters": {"attack_name": "byzantine", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 16: Performance under Byzantine Attack at Round {TARGET_ROUND} (Non-IID α=0.1)",
-        "filename": "table_16_attack_byzantine_noniid_a01_r40.md",
+        "title": f"Table 22: Performance under Byzantine Attack at Round {TARGET_ROUND} (Non-IID α=0.1)",
+        "filename": "table_22_attack_byzantine_noniid_a01_r40.md",
         "filters": {"attack_name": "byzantine", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
 
     # ==========================================================
-    # --- Label Flipping Attack Scenarios ---
+    # --- Label Flipping Attack Scenarios (1 Malicious Client) ---
     # ==========================================================
      {
-        "title": f"Table 17: Performance under Label Flipping Attack at Round {TARGET_ROUND} (IID)",
-        "filename": "table_17_attack_labelflip_iid_r40.md",
-        "filters": {"attack_name": "label_flipping", "partitioner-name": "iid"},
+        "title": f"Table 23: Performance under Label Flipping Attack at Round {TARGET_ROUND} (IID, 1 Malicious Client)",
+        "filename": "table_23_attack_labelflip_iid_1_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "iid", "num_malicious_clients": 1},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 18: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.5)",
-        "filename": "table_18_attack_labelflip_noniid_a05_r40.md",
-        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5},
+        "title": f"Table 24: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.5, 1 Malicious Client)",
+        "filename": "table_24_attack_labelflip_noniid_a05_1_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "num_malicious_clients": 1},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
     {
-        "title": f"Table 19: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.1)",
-        "filename": "table_19_attack_labelflip_noniid_a01_r40.md",
-        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1},
+        "title": f"Table 25: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.1, 1 Malicious Client)",
+        "filename": "table_25_attack_labelflip_noniid_a01_1_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "num_malicious_clients": 1},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+
+    # ==========================================================
+    # --- Label Flipping Attack Scenarios (2 Malicious Clients) ---
+    # ==========================================================
+     {
+        "title": f"Table 26: Performance under Label Flipping Attack at Round {TARGET_ROUND} (IID, 2 Malicious Clients)",
+        "filename": "table_26_attack_labelflip_iid_2_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "iid", "num_malicious_clients": 2},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 27: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.5, 2 Malicious Clients)",
+        "filename": "table_27_attack_labelflip_noniid_a05_2_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "num_malicious_clients": 2},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 28: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.1, 2 Malicious Clients)",
+        "filename": "table_28_attack_labelflip_noniid_a01_2_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "num_malicious_clients": 2},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+
+    # ==========================================================
+    # --- Label Flipping Attack Scenarios (3 Malicious Clients) ---
+    # ==========================================================
+     {
+        "title": f"Table 29: Performance under Label Flipping Attack at Round {TARGET_ROUND} (IID, 3 Malicious Clients)",
+        "filename": "table_29_attack_labelflip_iid_3_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "iid", "num_malicious_clients": 3},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 30: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.5, 3 Malicious Clients)",
+        "filename": "table_30_attack_labelflip_noniid_a05_3_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.5, "num_malicious_clients": 3},
+        "index_col": "strategy-name",
+        "metrics": DEFAULT_METRICS,
+    },
+    {
+        "title": f"Table 31: Performance under Label Flipping Attack at Round {TARGET_ROUND} (Non-IID α=0.1, 3 Malicious Clients)",
+        "filename": "table_31_attack_labelflip_noniid_a01_3_malicious_r40.md",
+        "filters": {"attack_name": "label_flipping", "partitioner-name": "dirichlet", "dirichlet-alpha": 0.1, "num_malicious_clients": 3},
         "index_col": "strategy-name",
         "metrics": DEFAULT_METRICS,
     },
@@ -228,6 +324,12 @@ def load_round40_data(outputs_dir: Path, target_round: int) -> pd.DataFrame:
             record.setdefault("strategy-name", "unknown")
             record.setdefault("proximal-mu", 0.0)
 
+            malicious_ids = record.get("malicious-clients-ids", [])
+            if isinstance(malicious_ids, list):
+                record["num_malicious_clients"] = len(malicious_ids)
+            else:
+                record["num_malicious_clients"] = 0
+
             # Add metrics from the target round (or NaN if missing)
             metric_prefix = f"round{target_round}_"
             expected_metric_keys = {
@@ -265,7 +367,7 @@ def load_round40_data(outputs_dir: Path, target_round: int) -> pd.DataFrame:
 
     # Data Cleaning and Type Conversion
     print("Performing data cleaning and type conversion...")
-    numeric_cols = ["fraction-train", "dirichlet-alpha", "proximal-mu"] + \
+    numeric_cols = ["fraction-train", "dirichlet-alpha", "proximal-mu", "num_malicious_clients"] + \
                    [col for col in df.columns if col.startswith(f'round{target_round}_')]
     for col in numeric_cols:
         if col in df.columns: df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -300,7 +402,6 @@ def load_round40_data(outputs_dir: Path, target_round: int) -> pd.DataFrame:
     return df
 
 def format_metric(mean_series: pd.Series, std_series: pd.Series, decimals=3) -> pd.Series:
-    """Formats two series (mean, std) into a single 'mean ± std' string series."""
     std_series_filled = std_series.fillna(0)
     # Format mean and std, handle NaN in mean_series after formatting
     # If mean is NaN, output 'N/A', otherwise format mean ± std
@@ -384,14 +485,15 @@ def main():
                     if filter_val is None or filter_val == "":
                         if key == 'attack_name': filter_val = 'none'
                         elif key == 'personalization': filter_val = False
-                        elif key in ["fraction-train", "dirichlet-alpha", "proximal-mu"]: filter_val = np.nan
+                        elif key in ["fraction-train", "dirichlet-alpha", "proximal-mu", "num_malicious_clients"]: 
+                            filter_val = np.nan
                         else: filter_val = 'none'
 
                     if pd.isna(filter_val) and key in ["dirichlet-alpha"]:
                         filtered_df = filtered_df[filtered_df[key].isna()]
                     elif isinstance(filter_val, bool) and key == 'personalization':
                         filtered_df = filtered_df[filtered_df[key] == filter_val]
-                    elif isinstance(filter_val, (int, float)) and key in ["fraction-train", "dirichlet-alpha", "proximal-mu"]:
+                    elif isinstance(filter_val, (int, float)) and key in ["fraction-train", "dirichlet-alpha", "proximal-mu", "num_malicious_clients"]:
                         numeric_col = pd.to_numeric(filtered_df[key], errors='coerce')
                         if isinstance(filter_val, float):
                             filtered_df = filtered_df[np.isclose(numeric_col, filter_val, equal_nan=True)]
