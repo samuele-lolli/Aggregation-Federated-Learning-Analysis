@@ -298,33 +298,33 @@ def generate_standard_plot(df: pd.DataFrame, plot_def: dict, output_dir: Path, b
         fig.subplots_adjust(bottom=0.20, hspace=0.15) 
         fig.legend(handles, labels, title="Legend", loc='lower center', bbox_to_anchor=(0.5, 0.05), ncol=num_cols, fontsize=LEGEND_FS, title_fontsize=LEGEND_FS+2) 
     else:
-        print(f"   ⚠️ No data plotted for '{title}'. Legend skipped.")
+        print(f"No data plotted for '{title}'. Legend skipped.")
 
     output_dir.mkdir(exist_ok=True) 
     plot_path = output_dir / filename 
     try:
         fig.savefig(plot_path, bbox_inches='tight') 
-        print(f"   ✅ Generated plot: {plot_path.name} in {output_dir.name}")
+        print(f"Generated plot: {plot_path.name} in {output_dir.name}")
     except Exception as e_save:
-        print(f"   🔥 Error saving plot '{filename}': {e_save}")
+        print(f"Error saving plot '{filename}': {e_save}")
     plt.close(fig)
 
 def generate_backdoor_plot(*args, **kwargs):
-    print(f"   ⚠️ Plot type 'backdoor' called for non-backdoor attack. Re-routing to 'standard' plot.")
+    print(f"Plot type 'backdoor' called for non-backdoor attack. Re-routing to 'standard' plot.")
     kwargs.pop('force_client_only', None) 
     generate_standard_plot(*args, **kwargs)
 
 if __name__ == "__main__":
-    print("📊 Starting analysis for Label-Flipping (Grouped by Strategy)...")
+    print("Starting analysis for Label-Flipping (Grouped by Strategy)...")
     
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     print(f"Client-only plots (2x1) will be saved to: {PLOTS_DIR}")
         
-    print("⏳ Loading results data...")
+    print("Loading results data...")
     master_df = load_all_results(OUTPUTS_DIR)
 
     if not master_df.empty:
-        print(f"✅ Loaded data for {master_df['run_id'].nunique()} runs across {master_df['scenario_name'].nunique()} scenarios.")
+        print(f"Loaded data for {master_df['run_id'].nunique()} runs across {master_df['scenario_name'].nunique()} scenarios.")
         required_cols = {'personalization': bool, 'attack_name': str, 'fraction-train': float, 'dirichlet-alpha': float, 'proximal-mu': float, 'partitioner-name': str, 'num_malicious_clients': int, 'beta': float}
         default_values = {'personalization': False, 'attack_name': 'none', 'fraction-train': 1.0, 'dirichlet-alpha': np.nan, 'proximal-mu': 0.0, 'partitioner-name': 'unknown', 'num_malicious_clients': 0, 'beta': np.nan}
         
@@ -339,19 +339,19 @@ if __name__ == "__main__":
              is_iid_mask = master_df['partitioner-name'] == 'iid'
              master_df.loc[is_iid_mask, 'dirichlet-alpha'] = master_df.loc[is_iid_mask, 'dirichlet-alpha'].fillna(-1.0)
 
-        print("\n⚙️ Generating plots...")
+        print("\nGenerating plots...")
         for plot_def in PLOT_DEFINITIONS:
             filtered_df = master_df.copy()
             title = plot_def.get('title', 'Unnamed Plot')
-            print(f"\n🔍 Filtering data for: {title}")
+            print(f"\nFiltering data for: {title}")
             baseline_fedavg_df = None
 
             try:
                 filters = plot_def.get("filters", {})
-                if not filters: print("   ⚠️ No filters defined for this plot.")
+                if not filters: print("No filters defined for this plot.")
 
                 for key, value in filters.items():
-                    if key not in filtered_df.columns: print(f"   ⚠️ Warning: Filter key '{key}' not found. Skipping."); continue
+                    if key not in filtered_df.columns: print(f"Warning: Filter key '{key}' not found. Skipping."); continue
                     
                     if isinstance(value, list):
                         if key == 'strategy-name' or key == 'num_malicious_clients':
@@ -398,13 +398,13 @@ if __name__ == "__main__":
                         else:
                             filtered_df = filtered_df[filtered_df[key].astype(str) == str(filter_val)]
                 
-                print(f"   📊 Found {filtered_df['run_id'].nunique()} runs ({len(filtered_df)} rows) matching main filters for '{title}'.")
+                print(f"Found {filtered_df['run_id'].nunique()} runs ({len(filtered_df)} rows) matching main filters for '{title}'.")
 
                 # Find Baseline Data only if requested
                 include_baseline_flag = plot_def.get("include_baseline", False)
 
                 if include_baseline_flag:
-                    print("   Finding corresponding baseline FedAvg (No Attack) data...")
+                    print("Finding corresponding baseline FedAvg (No Attack) data...")
                     
                     baseline_filters = {
                         "attack_name": "none",
@@ -419,7 +419,7 @@ if __name__ == "__main__":
                         if key in filters:
                             baseline_filters[key] = filters[key]
                             
-                    print(f"   Baseline filters (Attack): {baseline_filters}") 
+                    print(f"Baseline filters (Attack): {baseline_filters}") 
 
                     baseline_fedavg_df = master_df.copy()
                     
@@ -439,15 +439,15 @@ if __name__ == "__main__":
                              baseline_fedavg_df = baseline_fedavg_df[baseline_fedavg_df[key].astype(str) == str(filter_val)]
 
                     if baseline_fedavg_df.empty:
-                         print("   ⚠️ Baseline FedAvg (No Attack) data not found for this configuration.")
+                         print("Baseline FedAvg (No Attack) data not found for this configuration.")
                     else:
-                          print(f"    Found {baseline_fedavg_df['run_id'].nunique()} baseline runs.")
+                          print(f"Found {baseline_fedavg_df['run_id'].nunique()} baseline runs.")
                 
 
                 if not filtered_df.empty or (baseline_fedavg_df is not None and not baseline_fedavg_df.empty):
-                    if filtered_df['run_id'].nunique() < 2: print("   ⚠️ Only one main run found, standard deviation will be zero.")
+                    if filtered_df['run_id'].nunique() < 2: print("Only one main run found, standard deviation will be zero.")
                     if baseline_fedavg_df is not None and baseline_fedavg_df['run_id'].nunique() < 2: 
-                        print("   ⚠️ Only one baseline run found, baseline standard deviation will be zero.")
+                        print("Only one baseline run found, baseline standard deviation will be zero.")
 
                     plot_type = plot_def.get("plot_type", "standard")
                     effective_baseline_df = baseline_fedavg_df if include_baseline_flag and baseline_fedavg_df is not None and not baseline_fedavg_df.empty else None
@@ -464,13 +464,13 @@ if __name__ == "__main__":
                         legend_map=legend_map
                     )
                 else:
-                    print(f"   ❌ No data remaining after filtering (and no baseline requested/found) for '{title}'. Skipping plot generation.")
+                    print(f"No data remaining after filtering (and no baseline requested/found) for '{title}'. Skipping plot generation.")
 
             except Exception as e:
-                print(f"   🔥 Error processing plot definition '{title}': {e}")
+                print(f"Error processing plot definition '{title}': {e}")
                 traceback.print_exc()
 
-        print(f"\n✅ Analysis complete. Plots saved in '{PLOTS_DIR}' directory.")
+        print(f"\nAnalysis complete. Plots saved in '{PLOTS_DIR}' directory.")
     else:
-        print("\n❌ Could not find or load any valid 'results.json' files in the 'outputs' directory.")
+        print("\nCould not find or load any valid 'results.json' files in the 'outputs' directory.")
         print("   Please run experiments using 'run_experiments.py' first.")

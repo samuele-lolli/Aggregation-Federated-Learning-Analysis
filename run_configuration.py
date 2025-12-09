@@ -2,6 +2,48 @@ from typing import Any, Dict, List
 
 # Each dictionary defines a scenario by specifying its differences from the base configuration (in run_experiments.py).
 scenarios: List[Dict[str, Any]] = [
+     # # ==============================================================================
+    # # --- IID Scenarios ---
+    # # ==============================================================================
+    {
+        "scenario_name": "FedAvg_IID",
+        "strategy-name": "fedprox",
+        "proximal-mu": 0.0,
+        "partitioner-name": "iid",
+    },
+    # {
+    #     "scenario_name": "FedProx_IID",
+    #     "strategy-name": "fedprox",
+    #     "proximal-mu": 0.01,
+    #     "partitioner-name": "iid",
+    # },
+    # {
+    #     "scenario_name": "FedAvgM_IID",
+    #     "strategy-name": "fedavgm",
+    #     "server_learning_rate": 1.0,
+    #     "server_momentum": 0.7,
+    #     "partitioner-name": "iid",
+    # },
+    # {
+    #     "scenario_name": "FedAdam_IID",
+    #     "strategy-name": "fedadam",
+    #     "eta": 1e-1,
+    #     "eta_l": 1e-1,
+    #     "beta_1": 0.7,
+    #     "beta_2": 0.99,
+    #     "tau": 1e-2,
+    #     "partitioner-name": "iid",
+    # },
+    # {
+    #     "scenario_name": "FedYogi_IID",
+    #     "strategy-name": "fedyogi",
+    #     "eta": 1e-2,
+    #     "eta_l": 0.0316,
+    #     "beta_1": 0.7,
+    #     "beta_2": 0.99,
+    #     "tau": 1e-3,
+    #     "partitioner-name": "iid",
+    # },
 # ==============================================================================
     # --- FedAvg with Central DP in IID scenarios ---
     # ==============================================================================
@@ -573,48 +615,7 @@ scenarios: List[Dict[str, Any]] = [
     #     "partitioner-name": "dirichlet",
     #     "dirichlet-alpha": 0.03,
     # },
-    # # ==============================================================================
-    # # --- IID Scenarios ---
-    # # ==============================================================================
-    # {
-    #     "scenario_name": "FedAvg_IID",
-    #     "strategy-name": "fedprox",
-    #     "proximal-mu": 0.0,
-    #     "partitioner-name": "iid",
-    # },
-    # {
-    #     "scenario_name": "FedProx_IID",
-    #     "strategy-name": "fedprox",
-    #     "proximal-mu": 0.01,
-    #     "partitioner-name": "iid",
-    # },
-    # {
-    #     "scenario_name": "FedAvgM_IID",
-    #     "strategy-name": "fedavgm",
-    #     "server_learning_rate": 1.0,
-    #     "server_momentum": 0.7,
-    #     "partitioner-name": "iid",
-    # },
-    # {
-    #     "scenario_name": "FedAdam_IID",
-    #     "strategy-name": "fedadam",
-    #     "eta": 1e-1,
-    #     "eta_l": 1e-1,
-    #     "beta_1": 0.7,
-    #     "beta_2": 0.99,
-    #     "tau": 1e-2,
-    #     "partitioner-name": "iid",
-    # },
-    # {
-    #     "scenario_name": "FedYogi_IID",
-    #     "strategy-name": "fedyogi",
-    #     "eta": 1e-2,
-    #     "eta_l": 0.0316,
-    #     "beta_1": 0.7,
-    #     "beta_2": 0.99,
-    #     "tau": 1e-3,
-    #     "partitioner-name": "iid",
-    # },
+   
     # # ==============================================================================
     # # --- Non-IID Scenarios (alpha=0.5) ---
     # # ==============================================================================

@@ -299,7 +299,7 @@ def load_round40_data(outputs_dir: Path, target_round: int) -> pd.DataFrame:
                 processed_runs.add(run_id)
                 continue
 
-            # Find data for the target round ---
+            # Find data for the target round
             target_round_data = None
             for round_data in rounds_list:
                 if round_data.get("round") == target_round:
@@ -437,11 +437,11 @@ def generate_markdown_table(df: pd.DataFrame, title: str, index_col_name: str) -
     return markdown
 
 def main():
-    print("📊 Starting table generation...")
+    print("Starting table generation...")
     master_df = load_round40_data(OUTPUTS_DIR, TARGET_ROUND)
 
     if master_df.empty:
-        print(f"\n❌ Could not find any 'results.json' files with data for round {TARGET_ROUND}.")
+        print(f"\nCould not find any 'results.json' files with data for round {TARGET_ROUND}.")
         return
     
     for table_def in TABLE_DEFINITIONS:
@@ -451,13 +451,13 @@ def main():
         index_col = table_def['index_col']
         metrics_to_show = table_def['metrics']
 
-        print(f"⚙️ Generating: {title}")
+        print(f"Generating: {title}")
 
         filtered_df = master_df.copy()
         try:
             for key, value in filters.items():
                 if key not in filtered_df.columns:
-                    print(f"   ⚠️ Warning: Filter key '{key}' not found. Skipping filter.")
+                    print(f"Warning: Filter key '{key}' not found. Skipping filter.")
                     continue
 
                 if isinstance(value, list):
@@ -503,21 +503,20 @@ def main():
                         filtered_df = filtered_df[filtered_df[key].astype(str) == str(filter_val)]
 
             if filtered_df.empty:
-                print(f"   ❌ No data found after filtering for this table. Skipping.")
+                print(f"No data found after filtering for this table. Skipping.")
                 markdown_output = generate_markdown_table(pd.DataFrame(), title, index_col)
             else:
-                print(f"   📊 Found {len(filtered_df)} run summaries matching filters (representing {filtered_df['run_id'].nunique()} unique runs).")
+                print(f"Found {len(filtered_df)} run summaries matching filters (representing {filtered_df['run_id'].nunique()} unique runs).")
 
                 # Aggregation
                 missing_metrics = [m for m in metrics_to_show if m not in filtered_df.columns or filtered_df[m].isnull().all()]
                 if missing_metrics:
-                      # print(f" ⚠️ Warning: Metrics missing or all NaN for aggregation: {missing_metrics}. Using available.")
                       metrics_to_agg = [m for m in metrics_to_show if m in filtered_df.columns and not filtered_df[m].isnull().all()]
                 else:
                       metrics_to_agg = metrics_to_show
 
                 if not metrics_to_agg:
-                     print(f"   ❌ No valid metrics to aggregate for this table. Skipping aggregation.")
+                     print(f"No valid metrics to aggregate for this table. Skipping aggregation.")
                      markdown_output = generate_markdown_table(pd.DataFrame(), title, index_col)
                 else:
                      agg_df = filtered_df.groupby(index_col)[metrics_to_agg].agg(['mean', 'std'])
@@ -550,13 +549,13 @@ def main():
             table_path = TABLES_DIR / filename
             with open(table_path, "w", encoding="utf-8") as f:
                 f.write(markdown_output)
-            print(f"   ✅ Saved table to {table_path.name}")
+            print(f"Saved table to {table_path.name}")
 
         except Exception as e:
-            print(f"   🔥 Error processing table definition '{title}': {e}")
+            print(f"Error processing table definition '{title}': {e}")
             traceback.print_exc()
 
-    print("\n✅ Table generation complete. Files are in the 'tables' directory.")
+    print("\nTable generation complete. Files are in the 'tables' directory.")
 
 if __name__ == "__main__":
     main()

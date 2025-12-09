@@ -40,7 +40,7 @@ class CustomDifferentialPrivacyServerSideFixedClipping(StrategyMixin, Differenti
         
         replies_list = list(replies)
         current_ndarrays = self.current_arrays.to_numpy_ndarrays()
-        log(INFO, f"--- NORME L2 UPDATE ROUND {server_round} (PRE-CLIPPING) ---")
+        log(INFO, f"NORME L2 UPDATE ROUND {server_round} (PRE-CLIPPING)")
         update_norms = []
 
         for r in replies_list:

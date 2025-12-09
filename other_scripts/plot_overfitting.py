@@ -120,4 +120,4 @@ if __name__ == "__main__":
         plot_filename = f"overfit_check_{scenario_name}.pdf"
         plot_overfitting_check(data, title=scenario_name, filename=plot_filename)
     
-    print("\n✅ Process completed.")
+    print("\n Process completed.")
