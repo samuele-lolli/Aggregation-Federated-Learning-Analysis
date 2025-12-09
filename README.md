@@ -1,4 +1,4 @@
-# Federated Learning: Aggregation Strategies, Heterogeneity & Robustness
+# Tecniche di aggregazione nel Federated Learning: eterogeneità e robustezza
 
 Questo repository contiene il codice sorgente e il framework di simulazione sviluppato per la Tesi di Laurea Magistrale in Informatica: **"Tecniche di aggregazione nel Federated Learning: Eterogeneità e Robustezza"**.
 
