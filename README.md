@@ -8,9 +8,9 @@ Il progetto è basato su **[Flower](https://flower.ai/)** e **PyTorch**, ed è p
 
 * **Simulazione scalabile**: Orchestrazione automatizzata di centinaia di run sperimentali tramite `run_experiments.py`. Con la giusta potenza computazionale è possibile supportare le simulazioni su un numero molto alto di nodi.
 
-* **Gestione eterogeneità (Non-IID)**: Partizionamento dei dati basato su Distribuzione di Dirichlet ($\alpha$) per simulare sbilanciamento nelle label e nella quantità di dati.
+* **Gestione eterogeneità (Non-IID)**: Partizionamento dei dati basato su Distribuzione di Dirichlet per simulare sbilanciamento nelle label e nella quantità di dati.
 
-* **Strategie di aggregazione**: Analisi sperimentale di di diverse strategie che estendono le classi base di Flower con logging avanzato e metriche:
+* **Strategie di aggregazione**: Analisi sperimentale di diverse strategie che estendono le classi base di Flower con logging avanzato e metriche:
    
    *Baselines*: FedAvg, FedProx, FedAvgM (Momentum).
    
