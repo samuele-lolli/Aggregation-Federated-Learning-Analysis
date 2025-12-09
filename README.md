@@ -2,7 +2,7 @@
 
 Questo repository contiene il codice sorgente e il framework di simulazione sviluppato per la Tesi di Laurea Magistrale in Informatica: **"Tecniche di aggregazione nel Federated Learning: Eterogeneità e Robustezza"**.
 
-[cite_start]Il progetto è basato su **[Flower](https://flower.ai/)** (Flwr) e **PyTorch**, ed è progettato per analizzare l'impatto dell'eterogeneità dei dati (Non-IID) e la resilienza contro attacchi avversari (Adversarial Attacks) in scenari Federated Learning Cross-Silo[cite: 861, 887, 1279].
+Il progetto è basato su **[Flower](https://flower.ai/)** e **PyTorch**, ed è progettato per analizzare l'impatto dell'eterogeneità dei dati (Non-IID) e la resilienza contro attacchi avversari in scenari Federated Learning cross-silo.
 
 ## 🌟 Caratteristiche Principali
 
@@ -10,14 +10,14 @@ Questo repository contiene il codice sorgente e il framework di simulazione svil
 **Gestione Eterogeneità (Non-IID)**: Partizionamento dei dati basato su Distribuzione di Dirichlet ($\alpha$) per simulare sbilanciamento nelle label e nella quantità di dati.
 **Strategie di Aggregazione Avanzate**: Implementazione custom di diverse strategie che estendono le classi base di Flower con logging avanzato e metriche:
     * *Baselines*: FedAvg, FedProx, FedAvgM (Momentum).
-    * *Ottimizzatori Adattivi*: FedAdam, FedYogi[cite: 1152].
-    * *Strategie Robuste*: FedMedian [cite: 1199][cite_start], FedTrimmedAvg [cite: 1213][cite_start], MultiKrum[cite: 1230].
+    * *Ottimizzatori Adattivi*: FedAdam, FedYogi.
+    * *Strategie Robuste*: FedMedian, FedTrimmedAvg, MultiKrum.
 * **Attacchi Avversari (Adversarial Attacks)**: Implementazione lato client di attacchi per testare la robustezza:
     * *Model Poisoning*: Gaussian Updates (Attacco Bizantino).
     * *Data Poisoning*: Label Flipping (mirato o random).
     * *Backdoor Attack*: Iniezione di trigger pattern nelle immagini.
-* **Personalizzazione (FedPer)**: Implementazione dell'approccio *Federated Learning with Personalization Layers* per gestire l'eterogeneità[cite: 1184, 1530].
-* **Metriche Rigorose**: Aggregazione statisticamente corretta delle metriche (es. somma delle matrici di confusione per il calcolo dell'F1-Score globale) e salvataggio automatico in JSON[cite: 1311].
+* **Personalizzazione (FedPer)**: Implementazione dell'approccio *Federated Learning with Personalization Layers* per gestire l'eterogeneità.
+* **Metriche Rigorose**: Aggregazione statisticamente corretta delle metriche (es. somma delle matrici di confusione per il calcolo dell'F1-Score globale) e salvataggio automatico in JSON.
 
 ## 📂 Struttura del Progetto
 
