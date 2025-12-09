@@ -44,8 +44,8 @@ Il progetto richiede Python (>= 3.8). Le dipendenze sono gestite nel file `pypro
 
 1.  **Clona il repository:**
     ```bash
-    git clone [https://github.com/tuo-username/fl-tesi.git](https://github.com/tuo-username/fl-tesi.git)
-    cd fl-tesi
+    git clone https://github.com/samuele-lolli/Aggregation-Federated-Learning-Analysis
+    cd Aggregation-Federated-Learning-Analysis
     ```
 
 2.  **Installa le dipendenze:**
